@@ -1,0 +1,195 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #F7F7FC;
+    background-image:
+        radial-gradient(circle at 10% 0%, rgba(124, 92, 252, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 90% 20%, rgba(255, 107, 157, 0.08) 0%, transparent 45%);
+    color: #1A1B25;
+    padding: 32px;
+    margin: 0;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0 0 4px 0;
+    background: linear-gradient(90deg, #7C5CFC, #FF6B9D);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.tagline {
+    color: #8A8DA0;
+    font-size: 13px;
+    margin: 0 0 28px 0;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.panel {
+    flex: 1;
+    background: #FFFFFF;
+    border: 1px solid #ECECF6;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(124, 92, 252, 0.06);
+}
+
+.panel h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: #A0A3B8;
+    margin: 0 0 14px 0;
+    font-weight: 700;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    margin: 8px 0;
+    background: #F4F4FB;
+    color: #1A1B25;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: left;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, color 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+button.op-encoding {
+    background: #E5FBF8;
+    color: #00A896;
+}
+button.op-encoding:hover {
+    box-shadow: 0 6px 16px rgba(0, 217, 192, 0.3);
+}
+
+button.op-crypto {
+    background: #FFEBF2;
+    color: #E0447A;
+}
+button.op-crypto:hover {
+    box-shadow: 0 6px 16px rgba(255, 107, 157, 0.3);
+}
+
+button.op-hash {
+    background: #FFF4E0;
+    color: #C97F1E;
+}
+button.op-hash:hover {
+    box-shadow: 0 6px 16px rgba(255, 184, 77, 0.3);
+}
+
+textarea {
+    width: 100%;
+    height: 110px;
+    background: #FAFAFD;
+    color: #1A1B25;
+    border: 2px solid #ECECF6;
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    resize: vertical;
+    transition: border-color 0.15s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #7C5CFC;
+}
+
+#bake-button {
+    background: linear-gradient(135deg, #7C5CFC, #FF6B9D);
+    color: white;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.3px;
+    padding: 14px;
+    border-radius: 24px;
+    box-shadow: 0 6px 20px rgba(124, 92, 252, 0.35);
+    font-size: 14px;
+}
+
+#bake-button:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 10px 26px rgba(124, 92, 252, 0.45);
+}
+
+#bake-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.recipe-step {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F4F4FB;
+    padding: 12px 14px;
+    margin: 10px 0;
+    border-radius: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    position: relative;
+}
+
+.recipe-step:not(:last-child)::after {
+    content: "↓";
+    position: absolute;
+    left: 50%;
+    bottom: -20px;
+    transform: translateX(-50%);
+    color: #7C5CFC;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.remove-btn {
+    background: white;
+    border: none;
+    color: #E0447A;
+    padding: 4px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(224, 68, 122, 0.15);
+}
+
+.remove-btn:hover {
+    background: #FFEBF2;
+    transform: none;
+}
+
+#recipe-list:empty::before {
+    content: "Click an operation to add it here ✦";
+    color: #C4C6D6;
+    font-size: 13px;
+    font-style: italic;
+}
