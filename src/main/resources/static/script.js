@@ -48,18 +48,28 @@ function renderRecipeList() {
 
 async function bake() {
     const input = document.getElementById("input-box").value;
+    const outputBox = document.getElementById("output-box");
 
-    const response = await fetch("/api/bake", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: input, recipe: recipe })
-    });
+    try {
+        const response = await fetch("/api/bake", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ input: input, recipe: recipe })
+        });
 
-    const data = await response.json();
-    document.getElementById("output-box").value = data.output;
+        if (!response.ok) {
+            outputBox.value = "Server error " + response.status + ": " + (await response.text());
+            return;
+        }
 
-    // Show the visual walkthrough for any step that can explain itself (e.g. sha256)
-    renderExplanation(data.steps);
+        const data = await response.json();
+        outputBox.value = data.output;
+
+        // Show the visual walkthrough for any step that can explain itself (e.g. sha256)
+        renderExplanation(data.steps);
+    } catch (error) {
+        outputBox.value = "Could not reach the server. Is the app running at http://localhost:8080 ?\n" + error;
+    }
 }
 
 document.getElementById("bake-button").onclick = bake;
