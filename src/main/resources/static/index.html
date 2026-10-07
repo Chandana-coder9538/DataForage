@@ -32,7 +32,20 @@
         </div>
 
     </div>
-     <script src="Explain.js"></script>
+
+    <!-- Learning panel: filled by explain.js after Bake -->
+    <section id="explanation" class="explanation" hidden>
+        <h2>How it works</h2>
+        <div id="explanation-tabs" class="explanation-tabs"></div>
+        <div id="explanation-body" class="explanation-body"></div>
+        <div class="explanation-nav">
+            <button id="explain-prev" type="button">&larr; Previous</button>
+            <span id="explain-progress"></span>
+            <button id="explain-next" type="button">Next &rarr;</button>
+        </div>
+    </section>
+
+    <script src="Explain.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
