@@ -5,6 +5,8 @@ import com.bheerappa.dataforge.operations.OperationRegistry;
 import com.bheerappa.dataforge.operations.Recipe;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RecipeEngine {
 
@@ -15,13 +17,20 @@ public class RecipeEngine {
     }
 
     public String run(RecipeRequest request) throws Exception {
-        Recipe recipe = new Recipe();
+        return buildRecipe(request).bake(request.getInput(), null);
+    }
 
+    /** Like run(), but returns every step's input, output and explanation. */
+    public List<Recipe.StepResult> runWithSteps(RecipeRequest request) throws Exception {
+        return buildRecipe(request).bakeWithSteps(request.getInput(), null);
+    }
+
+    private Recipe buildRecipe(RecipeRequest request) {
+        Recipe recipe = new Recipe();
         for (RecipeStep step : request.getRecipe()) {
             Operations operation = registry.getByName(step.getName());
             recipe.addStep(operation);
         }
-
-        return recipe.bake(request.getInput(), null);
+        return recipe;
     }
 }

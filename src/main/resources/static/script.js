@@ -57,6 +57,9 @@ async function bake() {
 
     const data = await response.json();
     document.getElementById("output-box").value = data.output;
+
+    // Show the visual walkthrough for any step that can explain itself (e.g. sha256)
+    renderExplanation(data.steps);
 }
 
 document.getElementById("bake-button").onclick = bake;

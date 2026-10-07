@@ -1,8 +1,11 @@
 package com.bheerappa.dataforge.api;
 
+import com.bheerappa.dataforge.operations.Recipe;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -15,8 +18,12 @@ public class RecipeController {
     }
 
     @PostMapping("/api/bake")
-    public Map<String, String> bake(@RequestBody RecipeRequest request) throws Exception {
-        String result = engine.run(request);
-        return Map.of("output", result);
+    public Map<String, Object> bake(@RequestBody RecipeRequest request) throws Exception {
+        List<Recipe.StepResult> steps = engine.runWithSteps(request);
+
+        // The final output is the last step's output (or the input itself for an empty recipe).
+        String output = steps.isEmpty() ? request.getInput() : steps.get(steps.size() - 1).output();
+
+        return Map.of("output", output, "steps", steps);
     }
 }
