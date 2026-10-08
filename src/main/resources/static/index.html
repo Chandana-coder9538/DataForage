@@ -2,48 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DataForge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DataForge - learn how data really changes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>DataForge</h1>
-
-    <div class="container">
-
-        <div class="panel">
-            <h2>Operations</h2>
-            <div id="operation-list"></div>
+    <header class="hero">
+        <div class="brand">
+            <div class="logo">D</div>
+            <div>
+                <h1>DataForge</h1>
+                <p class="tagline">Build a recipe, bake it, and see exactly how your data changes.</p>
+            </div>
         </div>
+        <ol class="how">
+            <li><span>1</span>Pick operations</li>
+            <li><span>2</span>Build your recipe</li>
+            <li><span>3</span>Bake and learn</li>
+        </ol>
+    </header>
 
-        <div class="panel">
-            <h2>Recipe</h2>
-            <div id="recipe-list"></div>
-        </div>
+    <main class="workspace">
 
-        <div class="panel">
-            <h2>Input</h2>
-            <textarea id="input-box" placeholder="Type something..."></textarea>
+        <section class="card ops-card">
+            <div class="card-head">
+                <span class="step-badge">1</span>
+                <div>
+                    <h2>Pick operations</h2>
+                    <p>Click one to add it to your recipe.</p>
+                </div>
+            </div>
+            <div id="operation-list" class="op-list"></div>
+        </section>
 
-            <button id="bake-button">Bake</button>
+        <section class="card recipe-card">
+            <div class="card-head">
+                <span class="step-badge">2</span>
+                <div>
+                    <h2>Your recipe</h2>
+                    <p>Steps run from top to bottom.</p>
+                </div>
+            </div>
 
-            <h2>Output</h2>
-            <textarea id="output-box" readonly></textarea>
-        </div>
+            <div class="examples">
+                <div class="examples-label">Not sure where to start? Try an example</div>
+                <div id="example-list" class="example-list"></div>
+            </div>
 
-    </div>
+            <div id="recipe-list" class="recipe-list"></div>
+        </section>
 
-    <!-- Learning panel: filled by explain.js after Bake -->
+        <section class="card bake-card">
+            <div class="card-head">
+                <span class="step-badge">3</span>
+                <div>
+                    <h2>Bake it</h2>
+                    <p>Type some text, then bake.</p>
+                </div>
+            </div>
+
+            <label class="field-label" for="input-box">Your text</label>
+            <textarea id="input-box" placeholder="Type or paste some text..."></textarea>
+
+            <button id="bake-button" type="button">Bake it and show me how</button>
+
+            <label class="field-label" for="output-box">Final result</label>
+            <textarea id="output-box" readonly placeholder="Your result appears here"></textarea>
+        </section>
+
+    </main>
+
+    <!-- Learning area: filled by explain.js after every Bake -->
     <section id="explanation" class="explanation" hidden>
-        <h2>How it works</h2>
-        <div id="explanation-tabs" class="explanation-tabs"></div>
-        <div id="explanation-body" class="explanation-body"></div>
-        <div class="explanation-nav">
-            <button id="explain-prev" type="button">&larr; Previous</button>
-            <span id="explain-progress"></span>
-            <button id="explain-next" type="button">Next &rarr;</button>
+        <div class="explanation-head">
+            <span class="step-badge">4</span>
+            <h2>Learn what happened</h2>
+        </div>
+
+        <!-- Plain-English story: what each operation did to the text -->
+        <div id="recipe-story" class="recipe-story"></div>
+
+        <!-- Step-by-step lesson for one operation (opens from the story) -->
+        <div id="lesson" class="lesson" hidden>
+            <div class="lesson-head">
+                <h3 id="lesson-title" class="lesson-title"></h3>
+                <div class="lesson-actions">
+                    <button id="mode-toggle" type="button">Show the math</button>
+                    <button id="lesson-close" type="button">Close</button>
+                </div>
+            </div>
+
+            <div id="explanation-body" class="explanation-body"></div>
+
+            <div class="explanation-nav">
+                <button id="explain-prev" type="button">&larr; Previous</button>
+                <span id="explain-progress"></span>
+                <button id="explain-next" type="button">Next &rarr;</button>
+            </div>
         </div>
     </section>
+
+    <footer class="footer">DataForge is a learning tool. The result is always the real one; the lessons just show how it was made.</footer>
 
     <script src="Explain.js"></script>
     <script src="script.js"></script>
