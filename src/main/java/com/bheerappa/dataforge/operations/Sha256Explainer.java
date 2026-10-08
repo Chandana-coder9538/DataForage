@@ -142,7 +142,6 @@ public final class Sha256Explainer {
         int e = state[4], f = state[5], g = state[6], h = state[7];
 
         if (recording != null) {
-            recording.words = words.clone();
             recording.schedule = w.clone();
         }
 
@@ -213,11 +212,17 @@ public final class Sha256Explainer {
             property("Collision resistant", "Finding two different inputs with the same hash is practically impossible.")
         );
         return new StepDetail(
-            "Overview: what is a hash?",
+            "What is a hash?",
             "A hash function is a fingerprint machine. It reads any amount of data and produces a short, "
                 + "fixed-size fingerprint. SHA-256 does this by mixing the data again and again with bit "
                 + "operations until the result looks random. The steps below show exactly how.",
-            data("properties", properties)
+            data(
+                "intro", true,
+                "plain", "A hash is like a fingerprint for text. Put any text in and you get a short code out. "
+                    + "The same text always gives the same code, but you can never rebuild the text from the code. "
+                    + "People use hashes to check that data has not changed and to store passwords safely.",
+                "properties", properties
+            )
         );
     }
 
@@ -231,10 +236,13 @@ public final class Sha256Explainer {
             binary.add(String.format("%8s", Integer.toBinaryString(value)).replace(' ', '0'));
         }
         return new StepDetail(
-            "Step 1: Text to bytes",
+            "Turn your text into numbers",
             "Computers hash numbers, not letters. The text is first converted to bytes using UTF-8. "
                 + "Each byte is 8 bits, shown here in hex and in binary.",
             data(
+                "plain", "Computers cannot work with letters directly, so every character is first changed into "
+                    + "a number. For example the letter h is 104. Those numbers are then written in binary, "
+                    + "the 0s and 1s a computer really uses.",
                 "text", input,
                 "byteCount", message.length,
                 "bytesHex", hex,
@@ -250,6 +258,9 @@ public final class Sha256Explainer {
         long bitLength = (long) n * 8;
 
         Map<String, Object> d = new LinkedHashMap<>();
+        d.put("plain", "SHA-256 works on fixed-size boxes of 64 characters. Your text is smaller, so the rest of "
+            + "the box is topped up with filler, and the length of your text is written at the end. "
+            + "Nothing is lost, the box is just filled up.");
         d.put("messageBytes", n);
         d.put("originalBits", bitLength);
         d.put("paddedBytes", padded.length);
@@ -266,7 +277,7 @@ public final class Sha256Explainer {
         }
 
         return new StepDetail(
-            "Step 2: Padding",
+            "Fill up the box",
             "SHA-256 only works on blocks of exactly 512 bits (64 bytes). So the message is padded: "
                 + "first a single 1 bit (the byte 0x80), then zeros, and finally the original length "
                 + "as a 64-bit number. Because the length is included, 'a' and 'a\\0' never get the same padding.",
@@ -287,11 +298,16 @@ public final class Sha256Explainer {
             blocks.add(words);
         }
         return new StepDetail(
-            "Step 3: Split into 512-bit blocks",
+            "Cut into pieces",
             "The padded message is cut into 512-bit blocks. Each block is read as sixteen 32-bit words "
                 + "(W0 to W15). Blocks are processed one after another, and each block's result feeds "
                 + "into the next.",
-            data("totalBlocks", totalBlocks, "blocks", blocks, "truncated", totalBlocks > MAX_BLOCKS_SHOWN)
+            data(
+                "techOnly", true,
+                "plain", "The filled box is cut into 16 small pieces called words. If your text needs more than "
+                    + "one box, the boxes are handled one after another, each one building on the last.",
+                "totalBlocks", totalBlocks, "blocks", blocks, "truncated", totalBlocks > MAX_BLOCKS_SHOWN
+            )
         );
     }
 
@@ -309,12 +325,18 @@ public final class Sha256Explainer {
         example.put("result", hex(w[16]));
 
         return new StepDetail(
-            "Step 4: Message schedule (16 words become 64)",
+            "Blend the pieces together",
             "Sixteen words are not enough for 64 rounds, so they are stretched to 64. Each new word W[t] "
                 + "is built from four earlier words: W[t-16] + sigma0(W[t-15]) + W[t-7] + sigma1(W[t-2]), "
                 + "where sigma0 and sigma1 rotate and shift bits. This spreads every input bit across "
                 + "many words. (Shown for the first block.)",
-            data("words", schedule, "example", example)
+            data(
+                "techOnly", true,
+                "plain", "Sixteen pieces are not enough to mix well, so the machine blends them together to "
+                    + "make 48 more, 64 in total. Each new piece is a mixture of earlier pieces, like "
+                    + "stirring paint colours together.",
+                "words", schedule, "example", example
+            )
         );
     }
 
@@ -347,14 +369,19 @@ public final class Sha256Explainer {
         example.put("t2", hex(s[9]));
 
         return new StepDetail(
-            "Step 5: Compression (64 rounds)",
+            "Scramble it 64 times",
             "Eight working variables a to h start from the current hash state. In each of the 64 rounds, "
                 + "two temporary values are computed: T1 = h + Sigma1(e) + Ch(e,f,g) + K[t] + W[t] and "
                 + "T2 = Sigma0(a) + Maj(a,b,c). Then every variable shifts one place (h=g, g=f, f=e, ...), "
                 + "with e = d + T1 and a = T1 + T2. Ch picks bits from f or g depending on e; Maj takes the "
                 + "majority vote of a, b and c. K[t] are fixed constants derived from prime numbers. "
                 + "(Shown for the first block.)",
-            data("initialState", hexList(r.blocks.get(0)[0]), "rounds", rounds, "round0", example)
+            data(
+                "plain", "Now comes the main mixing, 64 rounds of it. Imagine 8 cups of paint. In every round the "
+                    + "machine pours, stirs and swaps colours between the cups and adds one new piece. After 64 "
+                    + "rounds your original text is completely scrambled.",
+                "initialState", hexList(r.blocks.get(0)[0]), "rounds", rounds, "round0", example
+            )
         );
     }
 
@@ -374,12 +401,14 @@ public final class Sha256Explainer {
         String jdk = toHex(MessageDigest.getInstance("SHA-256").digest(message));
 
         return new StepDetail(
-            "Step 6: Final hash",
+            "Read off the fingerprint",
             "After the 64 rounds, the working variables are added word by word to the state the block "
                 + "started with. This addition is what makes the process one-way, because the original "
                 + "state is mixed back in. After the last block, the eight 32-bit words are joined together "
                 + "to give the 256-bit hash.",
             data(
+                "plain", "The 8 mixed numbers are written side by side. That string of 64 letters and digits is "
+                    + "your hash, the fingerprint of your text.",
                 "totalBlocks", r.blocks.size(),
                 "blocks", blocks,
                 "digest", ours,
@@ -404,11 +433,14 @@ public final class Sha256Explainer {
         }
 
         return new StepDetail(
-            "Step 7: The avalanche effect",
+            "Change one letter, everything changes",
             "Now we flip just ONE bit of the input (the last bit of the last byte) and hash again. "
                 + "A good hash changes about half of its 256 output bits, so the two hashes look "
                 + "completely unrelated. This is why you cannot 'get close' to a target hash.",
             data(
+                "plain", "Change just one tiny thing in the text and the fingerprint comes out completely "
+                    + "different. That is why nobody can nearly match a hash, and why hashes are so good "
+                    + "at spotting even the smallest change.",
                 "originalText", input,
                 "changedText", new String(changed, StandardCharsets.UTF_8),
                 "originalHash", toHex(original),
@@ -426,7 +458,6 @@ public final class Sha256Explainer {
 
     /** Everything we capture while hashing block 1, plus a summary of every block. */
     private static final class Recording {
-        int[] words;
         int[] schedule;
         int[] round0;
         final List<int[]> rounds = new ArrayList<>();
