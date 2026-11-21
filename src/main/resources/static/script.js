@@ -151,9 +151,15 @@ async function bake() {
             body: JSON.stringify({ input: input, recipe: recipe })
         });
 
-        if (!response.ok) {
-            outputBox.value = "Something went wrong on the server (" + response.status + "). "
-                + "Check that the input suits the recipe, for example From Base64 needs real Base64 text.";
+               if (!response.ok) {
+            let message = "Something went wrong on the server (" + response.status + ").";
+            try {
+                const err = await response.json();
+                if (err.error) message = err.error;
+            } catch (ignored) {
+                // the server sent no JSON body, keep the generic message
+            }
+            outputBox.value = message;
             document.getElementById("explanation").hidden = true;
             return;
         }
