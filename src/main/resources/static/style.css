@@ -1890,3 +1890,106 @@ textarea:focus {
     .b64-rowlabel { width: 100%; }
     .b64-grid { grid-template-columns: repeat(8, 1fr); }
 }
+
+/* DataForge workbench theme */
+:root {
+    --purple: #b2d94a;
+    --pink: #d6e99c;
+    --teal: #507c65;
+    --orange: #bc7544;
+    --blue: #668596;
+    --ink: #20251f;
+    --body: #555d53;
+    --muted: #858a7e;
+    --line: #dedfd5;
+    --soft: #f1f1e9;
+    --paper: #fffefa;
+    --font: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', 'Cascadia Code', Consolas, monospace;
+}
+
+body {
+    padding: 34px clamp(18px, 4.2vw, 68px) 56px;
+    color: var(--ink);
+    background: #f4f3ed;
+    background-image: linear-gradient(rgba(52, 65, 47, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(52, 65, 47, .035) 1px, transparent 1px);
+    background-size: 28px 28px;
+}
+button { color: inherit; }
+:focus-visible { outline: 3px solid #92b643; outline-offset: 3px; }
+.hero, .workspace, .footer, .explanation { max-width: 1440px; }
+.hero { align-items: flex-end; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #d8d9ce; }
+.brand { align-items: center; gap: 16px; }
+.logo {
+    display: grid; grid-template-columns: repeat(2, 7px); grid-template-rows: repeat(2, 7px); gap: 3px;
+    width: 46px; height: 46px; place-content: center; border-radius: 13px; transform: none;
+    background: #242b22; box-shadow: 0 5px 14px rgba(30, 39, 26, .16);
+}
+.logo span { display:block; background:#b8dc5a; border-radius:2px; }
+.logo span:nth-child(2) { opacity:.72; }.logo span:nth-child(3) { opacity:.5; }
+.eyebrow { margin: 0 0 2px; color: #777d6e; font: 600 9px/1.4 var(--mono); letter-spacing: 1.3px; }
+.live-dot { display:inline-block; width:6px; height:6px; margin:0 5px 1px 7px; border-radius:50%; background:#8caf43; box-shadow:0 0 0 3px #e3ebd4; }
+h1 { display:block; color:#22281f; font-size:30px; font-weight:700; letter-spacing:-1.2px; line-height:1.08; background:none; -webkit-text-fill-color:currentColor; }
+.tagline { margin-top:5px; color:#72776d; font-size:13px; }
+.how { gap:8px; }
+.how li { padding:7px 12px 7px 8px; border-radius:8px; border-color:#e0e1d8; background:rgba(255,254,250,.75); color:#555d53; font-size:11px; font-weight:600; }
+.how li span, .step-badge { width:22px; height:22px; border-radius:6px; color:#34402a; background:#e5edcf; font:600 11px var(--mono); }
+.workspace { grid-template-columns:minmax(250px,.88fr) minmax(270px,.92fr) minmax(300px,1.12fr); gap:14px; }
+.card, .explanation { padding:22px; border:1px solid #dedfd5; border-radius:12px; background:#fffefa; box-shadow:0 3px 12px rgba(42,48,35,.035); }
+.card-head { align-items:flex-start; gap:11px; margin-bottom:20px; }
+.card-head .step-badge { width:27px; height:27px; }
+.card-head h2 { font-size:16px; font-weight:700; letter-spacing:-.35px; }
+.card-head p { margin-top:3px; font-size:11px; }
+.op-list { gap:7px; }
+.op-card { gap:10px; padding:9px 10px; border:1px solid #e8e8df; border-radius:9px; background:#fbfbf6; }
+.op-icon { width:34px; height:34px; border-radius:8px; font-size:17px; background:color-mix(in srgb,var(--tone) 14%,white); }
+.op-text b { font-size:12px; font-weight:700; }
+.op-text small { font-size:10px; }
+.op-tag { padding:3px 6px; border-radius:4px; font-size:8px; }
+.op-plus { width:22px; height:22px; border-radius:6px; font-size:15px; color:#455139; background:#e5edcf; }
+.examples { margin-bottom:15px; padding:12px; border:1px solid #e4e7d9; border-radius:9px; background:#f5f6ed; }
+.examples-label { color:#596742; font-size:10px; font-weight:700; }
+.example-list { gap:6px; }
+.example-chip { padding:8px 10px; border:1px solid #e9e9e0; border-radius:7px; background:#fffefa; box-shadow:none; font-size:11px; font-weight:600; }
+.example-chip:hover { box-shadow:0 4px 12px rgba(40,49,33,.08); }
+.recipe-empty { padding:24px 15px; border:1px dashed #d4d8c9; border-radius:9px; font-size:12px; }
+.recipe-step { gap:9px; padding:9px 10px; border-width:1px; border-radius:9px; margin-bottom:18px; }
+.recipe-step:not(:last-child)::after { left:18px; bottom:-18px; color:#8da64f; }
+.recipe-num { width:22px; height:22px; font:500 10px var(--mono); }
+.recipe-icon { font-size:17px; }.recipe-label { font-size:12px; font-weight:600; }
+.remove-btn { width:24px; height:24px; border-radius:6px; }
+.field-label { margin:4px 0 7px; color:#777d70; font:600 9px var(--mono); letter-spacing:1.1px; }
+textarea { height:120px; padding:12px; border:1px solid #dedfd5; border-radius:8px; background:#f9f9f4; font:12px/1.65 var(--mono); }
+textarea:focus { border-color:#9bb851; box-shadow:0 0 0 3px rgba(156,184,81,.15); }
+#output-box { background:#f2f5eb; border-color:#dce4ce; }
+#bake-button { margin:2px 0 18px; padding:13px 15px; border:1px solid #283021; border-radius:8px; color:#f7f8f2; background:#293225; box-shadow:0 4px 10px rgba(35,43,30,.13); font-size:13px; font-weight:700; }
+#bake-button:hover { transform:translateY(-1px); background:#3d4b34; box-shadow:0 7px 16px rgba(35,43,30,.16); }
+.footer { margin-top:20px; padding-top:15px; border-top:1px solid #d8d9ce; text-align:left; font-size:10px; }
+.explanation { margin:20px auto 0; }
+.explanation h2 { color:#77806b; }
+.explanation .step-badge { background:#e5edcf; color:#34402a; }
+.explanation-nav button, .tab-btn.active, .explanation .dot.active { color:#fff; background:#293225; box-shadow:none; }
+.card-title { letter-spacing:-.5px; }
+.note { color:#555d53; background:#f6f4e9; border-left-color:#b6d651; }
+@media (max-width: 1050px) {
+    .workspace { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .bake-card { grid-column:1 / -1; }
+}
+@media (max-width: 680px) {
+    body { padding:20px 14px 34px; }
+    .hero { align-items:flex-start; margin-bottom:18px; padding-bottom:18px; }
+    .brand { gap:11px; }
+    .logo { width:40px; height:40px; }
+    h1 { font-size:26px; }
+    .tagline { max-width:250px; font-size:12px; }
+    .how { width:100%; gap:6px; }
+    .how li { flex:1; justify-content:center; padding:6px; font-size:9px; }
+    .how li span { width:18px; height:18px; font-size:9px; }
+    .workspace { grid-template-columns:1fr; gap:11px; }
+    .bake-card { grid-column:auto; }
+    .card { padding:17px; }
+    .explanation { padding:17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior:auto !important; transition-duration:.01ms !important; animation-duration:.01ms !important; }
+}
